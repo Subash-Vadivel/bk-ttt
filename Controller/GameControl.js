@@ -148,7 +148,8 @@ exports.update=async(req,res)=>{
     {
         const {tid,board,username}=req.body;
         const u=await Game.updateOne({_id:tid},{$set:{board}});
-        if(u.player1Id===username)
+        const p=await Game.find({_id:tid});
+        if(p.player1Id===username)
         {
             const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true}});
            
