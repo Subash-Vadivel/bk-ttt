@@ -197,3 +197,26 @@ exports.updateperiod=async(req,res)=>{
         })
     }
 }
+
+exports.quit=async(req,res)=>{
+    try{
+
+const {table,username}=req.body;
+       
+        const result=await Game.updateOne({_id:table},{$set:{result:"forbiden",losser:username}});
+        res.json({
+            status:"success",
+            details:result
+           })
+    }
+    catch(err)
+    {
+        res.json({
+            status:"error",
+            data:{
+                message:"Server Error",
+                err:err.message
+            }
+        })
+    }
+}

@@ -38,6 +38,9 @@ const gameSchema = new mongoose.Schema({
         type:String,
         require:true,
         default:"onLive"
+    },
+     losser:{
+        type:String,
     }
 
     
