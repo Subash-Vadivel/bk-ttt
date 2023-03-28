@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
-const LobbyList=new mongoose.create(
+const LobbyList=new mongoose.Schema(
     {
-        playerId:{
+        username:{
             type:String,
             require:true,
             unique:true

@@ -1,7 +1,9 @@
 const express=require('express');
 const app=express();
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
+const bodyparser = require('body-parser');
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: true}));
 app.use(
     cors(
         {
@@ -9,10 +11,11 @@ app.use(
         }
     )
   );
-  app.use(cookieParser());
 const Auth=require('./Routes/Auth')
+const Game=require("./Routes/Game");
 require('./db');
-app.use('/auth',Auth)
+app.use('/auth',Auth);
+app.use('/game',Game);
 app.get('/', async(req, res) => {
     console.log("called")
     res.json({res:'Hello World!'})
