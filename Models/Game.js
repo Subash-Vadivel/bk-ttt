@@ -25,12 +25,14 @@ const gameSchema = new mongoose.Schema({
         default: Array(9).fill(null)
       },
       player1status:{
-        type:String,
-        require:true
+        type:Boolean,
+        require:true,
+        default:true
     },
     player2status:{
-        type:String,
-        require:true
+        type:Boolean,
+        require:true,
+        deafult:false
     },
     result:{
         type:String,
