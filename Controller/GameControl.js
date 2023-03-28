@@ -185,12 +185,17 @@ exports.update=async(req,res)=>{
 exports.updateperiod=async(req,res)=>{
     try
     {
-        const {table}=req.body;
-       
-        const result=await Game.find({_id:table});
+        const {username}=req.body;
+        const resumeGame=await Game.find({
+            "$or": [{
+                "player1Id":username
+            }, {
+                "player2Id":username
+            }]
+        });
         res.json({
             status:"success",
-            details:result
+            details:resumeGame
            })
     }
     catch(err)
