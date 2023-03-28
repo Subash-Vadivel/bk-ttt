@@ -175,3 +175,25 @@ exports.update=async(req,res)=>{
         })
     }
 }
+exports.update=async(req,res)=>{
+    try
+    {
+        const {table}=req.body;
+       
+        const result=await Game.find({_id:table});
+        res.json({
+            status:"success",
+            details:result
+           })
+    }
+    catch(err)
+    {
+        res.json({
+            status:"error",
+            data:{
+                message:"Server Error",
+                err:err.message
+            }
+        })
+    }
+}
