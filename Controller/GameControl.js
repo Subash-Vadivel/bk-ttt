@@ -6,6 +6,23 @@ exports.lobby=async(req,res)=>{
     {
        const {username}=req.body;
        console.log(username);
+       const resumeGame=await Game.find({
+        "$or": [{
+            "player1Id":username
+        }, {
+            "player2Id":username
+        }]
+    });
+    if(resumeGame.length!=0)
+    {
+        res.json({
+            status:"success",
+            details:resumeGame
+           })
+       return;
+    }
+    else
+    {
        const already=await Lobby.find({username});
        if(already.length===0)
        {
@@ -33,7 +50,7 @@ exports.lobby=async(req,res)=>{
             player2symbol:"O"
         });
         const successmatch=await GameSession.save();
-        const del=await Lobby.deleteOne({username});
+        const del=await Lobby.deleteOne({username:matched.username});
         res.json({
             status:"success",
             details:successmatch
@@ -50,6 +67,7 @@ exports.lobby=async(req,res)=>{
            return;
           
     }
+}
     }
     catch(err)
     {
@@ -89,6 +107,28 @@ exports.matched=async(req,res)=>{
                })
 
         }
+
+    }
+    catch(err)
+    {
+        res.json({
+            status:"error",
+            data:{
+                message:"Server Error",
+                err:err.message
+            }
+        })
+    }
+}
+exports.cancel=async(req,res)=>{
+    try
+    {
+        const {username}=req.body;
+        const del=await Lobby.deleteOne({username});
+        res.json({
+            status:"success",
+           })
+           return;
 
     }
     catch(err)

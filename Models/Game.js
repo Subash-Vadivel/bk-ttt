@@ -23,7 +23,20 @@ const gameSchema = new mongoose.Schema({
         type: [String],
         required: true,
         default: Array(9).fill(null)
-      }
+      },
+      player1status:{
+        type:String,
+        require:true
+    },
+    player2status:{
+        type:String,
+        require:true
+    },
+    result:{
+        type:String,
+        require:true,
+        default:"onLive"
+    }
 
     
 })
