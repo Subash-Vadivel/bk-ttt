@@ -5,6 +5,7 @@ exports.lobby=async(req,res)=>{
     try
     {
        const {username}=req.body;
+       console.log(username);
        const already=await Lobby.find({username});
        if(already.length===0)
        {
