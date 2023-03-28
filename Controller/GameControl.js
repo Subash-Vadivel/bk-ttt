@@ -175,7 +175,7 @@ exports.update=async(req,res)=>{
         })
     }
 }
-exports.update=async(req,res)=>{
+exports.updateperiod=async(req,res)=>{
     try
     {
         const {table}=req.body;
