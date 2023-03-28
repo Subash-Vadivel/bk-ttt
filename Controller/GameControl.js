@@ -143,3 +143,36 @@ exports.cancel=async(req,res)=>{
     }
 }
 
+exports.update=async(req,res)=>{
+    try
+    {
+        const {tid,board,username}=req.body;
+        const u=await Game.updateOne({_id:tid},{$set:{board}});
+        if(u.player1Id===username)
+        {
+            const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true}});
+            res.json({
+                status:"success",
+                details:u1
+               })
+        }
+        else
+        {
+            const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false}});
+            res.json({
+                status:"success",
+                details:u2
+               })
+        }
+    }
+    catch(err)
+    {
+        res.json({
+            status:"error",
+            data:{
+                message:"Server Error",
+                err:err.message
+            }
+        })
+    }
+}

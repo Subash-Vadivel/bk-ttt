@@ -4,6 +4,8 @@ const GameControl =require('../Controller/GameControl')
 router.route('/lobby').post(GameControl.lobby);
 router.route('/match').post(GameControl.matched);
 router.route('/cancel').post(GameControl.cancel);
+router.route('/update').post(GameControl.update);
+
 
 
 module.exports=router;
