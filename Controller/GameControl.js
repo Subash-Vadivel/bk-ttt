@@ -1,6 +1,8 @@
 const db = require('../db');
 const Lobby=require("../Models/Lobby");
 const Game=require('../Models/Game');
+const Evaluate=require("../Assets/Evaluate");
+const Board=require("../Models/Board");
 exports.lobby=async(req,res)=>{
     try
     {
@@ -151,16 +153,46 @@ exports.update=async(req,res)=>{
         const p=await Game.find({_id:tid});
         if(p[0].player1Id===username)
         {
+            const boo=await Evaluate.winner(board);
+            if(boo)
+            {
+                const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p[0].player2Id,result:"completed"}});
+                const result=await Game.find({_id:tid});
+                
+            res.json({
+                status:"winner",
+                details:result
+               })
+
+            }
+            else
+            {
             const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true}});
             const result=await Game.find({_id:tid});
-        
+            
         res.json({
             status:"success",
             details:result
            })
         }
+        }
         else
         {
+            const boo=await Evaluate.winner(board);
+            if(boo)
+            {
+                
+            const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false,winner:username,losser:p[0].player1Id,result:"completed"}});
+            const result=await Game.find({_id:tid});
+        
+               res.json({
+            status:"winner",
+            details:result
+           })
+
+            }
+            else
+            {
             const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false}});
             const result=await Game.find({_id:tid});
         
@@ -168,6 +200,7 @@ exports.update=async(req,res)=>{
             status:"success",
             details:result
            })
+        }
         }
         
     }
@@ -186,6 +219,8 @@ exports.updateperiod=async(req,res)=>{
     try
     {
         const {username}=req.body;
+
+
         const resumeGame=await Game.find({
             "$or": [{
                 "player1Id":username
@@ -214,8 +249,23 @@ exports.quit=async(req,res)=>{
     try{
 
 const {table,username}=req.body;
-       
-        const result=await Game.updateOne({_id:table},{$set:{result:"forbiden",losser:username}});
+const resumeGame=await Game.findOne({
+    "$or": [{
+        "player1Id":username
+    }, {
+        "player2Id":username
+    }]
+});
+var a="";
+if(resumeGame.player1Id===username)
+{
+    a=resumeGame.player2Id;
+}
+else
+{
+    a=resumeGame.player1Id;
+}
+        const result=await Game.updateOne({_id:table},{$set:{result:"completed",losser:username,winner:a}});
         res.json({
             status:"success",
             details:result
