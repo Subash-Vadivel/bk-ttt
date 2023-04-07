@@ -327,7 +327,7 @@ exports.remove=async(req,res)=>{
         //         message:"Success",
         //     }
         // })
-    }
+    // }
             }
             catch(err)
             {
