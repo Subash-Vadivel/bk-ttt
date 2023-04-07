@@ -293,6 +293,17 @@ exports.remove=async(req,res)=>{
                 "player2Id":username
             }]
         });
+        if(resumeGame.length==0)
+        {
+            res.json({
+                status:"error",
+                data:{
+                    message:"Success",
+                }
+            })
+        }
+        else
+        {
         const newStat=await new Board(resumeGame);
         const result=await newStat.save();
         const dele=await Game.deleteOne({
@@ -308,6 +319,7 @@ exports.remove=async(req,res)=>{
                 message:"Success",
             }
         })
+    }
             }
             catch(err)
             {
