@@ -293,12 +293,14 @@ exports.remove=async(req,res)=>{
                 "player2Id":username
             }]
         });
-        if(resumeGame.length==0)
+
+        if(true)
         {
             res.json({
                 status:"error",
                 data:{
                     message:"Success",
+                    dat:resumeGame
                 }
             })
         }
