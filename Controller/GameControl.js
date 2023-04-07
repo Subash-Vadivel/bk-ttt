@@ -285,30 +285,11 @@ else
 exports.remove=async(req,res)=>{
     try{
 
+       
         const {username}=req.body;
-        const resumeGame=await Game.findOne({
-            "$or": [{
-                "player1Id":username
-            }, {
-                "player2Id":username
-            }]
-        });
 
-        if(true)
-        {
-            res.json({
-                status:"error",
-                data:{
-                    message:"Success",
-                    dat:resumeGame
-                }
-            })
-        }
-        else
-        {
-        const newStat=await new Board(resumeGame);
-        const result=await newStat.save();
-        const dele=await Game.deleteOne({
+
+        const resumeGame=await Game.find({
             "$or": [{
                 "player1Id":username
             }, {
@@ -316,11 +297,36 @@ exports.remove=async(req,res)=>{
             }]
         });
         res.json({
-            status:"error",
-            data:{
-                message:"Success",
-            }
-        })
+            status:"success",
+            details:resumeGame
+           })
+        // if(true)
+        // {
+        //     res.json({
+        //         status:"error",
+        //         data:{
+        //             message:"Success",
+        //             dat:resumeGame
+        //         }
+        //     })
+        // }
+        // else
+        // {
+        // const newStat=await new Board(resumeGame);
+        // const result=await newStat.save();
+        // const dele=await Game.deleteOne({
+        //     "$or": [{
+        //         "player1Id":username
+        //     }, {
+        //         "player2Id":username
+        //     }]
+        // });
+        // res.json({
+        //     status:"error",
+        //     data:{
+        //         message:"Success",
+        //     }
+        // })
     }
             }
             catch(err)
