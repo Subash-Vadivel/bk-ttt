@@ -6,6 +6,7 @@ router.route('/match').post(GameControl.matched);
 router.route('/cancel').post(GameControl.cancel);
 router.route('/update').post(GameControl.update);
 router.route('/quit').post(GameControl.quit);
+router.route('/remove').post(GameControl.remove);
 
 router.route('/updateperiod').post(GameControl.updateperiod);
 

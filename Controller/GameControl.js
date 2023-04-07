@@ -282,3 +282,41 @@ else
         })
     }
 }
+exports.remove=async(req,res)=>{
+    try{
+
+        const {username}=req.body;
+        const resumeGame=await Game.findOne({
+            "$or": [{
+                "player1Id":username
+            }, {
+                "player2Id":username
+            }]
+        });
+        const newStat=await new Board(resumeGame);
+        const result=await newStat.save();
+        const dele=await Game.deleteOne({
+            "$or": [{
+                "player1Id":username
+            }, {
+                "player2Id":username
+            }]
+        });
+        res.json({
+            status:"error",
+            data:{
+                message:"Success",
+            }
+        })
+            }
+            catch(err)
+            {
+                res.json({
+                    status:"error",
+                    data:{
+                        message:"Server Error",
+                        err:err.message
+                    }
+                })
+            }
+}
