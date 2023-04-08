@@ -319,7 +319,7 @@ exports.remove = async (req, res) => {
         ]
       });
   
-      if (resumeGame==undefined || resumeGame==null) {
+      if (!resumeGame) {
         // User not found in any game
         return res.json({
           status: "error",
