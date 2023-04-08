@@ -308,62 +308,57 @@ else
         })
     }
 }
-exports.remove=async(req,res)=>{
-    try{
-
-       
-        const {username}=req.body;
-
-
-        const resumeGame=await Game.findOne({
-            "$or": [{
-                "player1Id":username
-            }, {
-                "player2Id":username
-            }]
+exports.remove = async (req, res) => {
+    try {
+      const { username } = req.body;
+  
+      const resumeGame = await Game.findOne({
+        $or: [
+          { player1Id: username },
+          { player2Id: username }
+        ]
+      });
+  
+      if (!resumeGame) {
+        // User not found in any game
+        return res.json({
+          status: "error",
+          data: {
+            message: "User not found in any game"
+          }
         });
-        
-        if(resumeGame==undefined || resumeGame==null)
-        {
-            res.json({
-                status:"error",
-                data:{
-                    message:"Success",
-                    dat:resumeGame
-                }
-            })
+      }
+  
+      const newStat = await new Board({
+        player1Id: resumeGame.player1Id,
+        player2Id: resumeGame.player2Id,
+        result: resumeGame.result,
+        winner: resumeGame.winner,
+        losser: resumeGame.losser
+      }).save();
+  
+      const gameDeletionResult = await Game.deleteOne({
+        $or: [
+          { player1Id: username },
+          { player2Id: username }
+        ]
+      });
+  
+      res.json({
+        status: "success",
+        data: {
+          message: "User removed from game"
         }
-        else
-        {
-        const newStat=await new Board({
-            player1Id:resumeGame.player1Id,player2Id:resumeGame.player2Id,result:resumeGame.result,winner:resumeGame.winner,losser:resumeGame.losser
-        })
-        const result=await newStat.save();
-        const dele=await Game.deleteOne({
-            "$or": [{
-                "player1Id":username
-            }, {
-                "player2Id":username
-            }]
-        });
-        res.json({
-            status:"success",
-            data:{
-                message:"Success",
-            },
-            len:resumeGame.length
-            
-        })
+      });
+    } catch (err) {
+      console.error(err);
+      res.json({
+        status: "error",
+        data: {
+          message: "Failed to remove user from game",
+          error: err.message
+        }
+      });
     }
-            }
-            catch(err)
-            {
-                res.json({
-                    status:"error",
-                    data:{
-                        message:"Server Error",
-                        err:err.message
-                    }
-                })
-            }
-}
+  };
+  
