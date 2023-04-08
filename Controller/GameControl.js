@@ -155,7 +155,7 @@ exports.update=async(req,res)=>{
         {
             const boo=await Evaluate.winner(board);
             
-            const isBoardFilled = flase;
+            const isBoardFilled = false;
             if(!board.inclues(null))
                  isBoardFilled=true;
             if(boo)
@@ -192,7 +192,7 @@ exports.update=async(req,res)=>{
         else
         {
             const boo=await Evaluate.winner(board);
-            const isBoardFilled = flase;
+            const isBoardFilled = false;
             if(!board.inclues(null))
                  isBoardFilled=true;
             if(boo)
