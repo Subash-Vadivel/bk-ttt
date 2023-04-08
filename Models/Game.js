@@ -44,6 +44,10 @@ const gameSchema = new mongoose.Schema({
     },
     winner:{
         type:String
+    },
+    draw:{
+        type:Boolean,
+        default:false
     }
 
     

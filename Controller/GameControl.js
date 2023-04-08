@@ -154,6 +154,7 @@ exports.update=async(req,res)=>{
         if(p.player1Id===username)
         {
             const boo=await Evaluate.winner(board);
+            const isBoardFilled = board.every(row => row.every(val => val !== null));
             if(boo)
             {
                 const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p.player2Id,result:"completed"}});
@@ -164,6 +165,15 @@ exports.update=async(req,res)=>{
                 details:result
                })
 
+            }
+            else if(isBoardFilled)
+            {
+                const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,result:"completed",draw:true}});
+                const result=await Game.find({_id:tid});     
+            res.json({
+                status:"Draw",
+                details:result
+               })
             }
             else
             {
@@ -179,10 +189,11 @@ exports.update=async(req,res)=>{
         else
         {
             const boo=await Evaluate.winner(board);
+            const isBoardFilled = board.every(row => row.every(val => val !== null));
             if(boo)
             {
                 
-            const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false,winner:username,losser:p[0].player1Id,result:"completed"}});
+            const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false,winner:username,losser:p.player1Id,result:"completed"}});
             const result=await Game.find({_id:tid});
         
                res.json({
@@ -190,6 +201,16 @@ exports.update=async(req,res)=>{
             details:result
            })
 
+            }
+            else if(isBoardFilled)
+            {
+                const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false,result:"completed",draw:true}});
+                const result=await Game.find({_id:tid});
+            
+                   res.json({
+                status:"draw",
+                details:result
+               })
             }
             else
             {
@@ -297,7 +318,7 @@ exports.remove=async(req,res)=>{
             }]
         });
         
-        if(resumeGame==undefined || resumeGame==null)
+        if(resumeGame==undefined || resumeGame==null || resumeGame.draw)
         {
             res.json({
                 status:"error",
