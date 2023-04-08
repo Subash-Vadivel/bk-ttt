@@ -309,7 +309,9 @@ exports.remove=async(req,res)=>{
         }
         else
         {
-        const newStat=await new Board({...resumeGame});
+        const newStat=await new Board({
+            player1Id:resumeGame.player1Id,player2Id:resumeGame.player2Id,result:resumeGame.result,winner:resumeGame.winner,losser:resumeGame.losser
+        })
         const result=await newStat.save();
         const dele=await Game.deleteOne({
             "$or": [{
