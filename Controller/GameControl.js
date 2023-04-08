@@ -151,62 +151,57 @@ exports.update=async(req,res)=>{
         const {tid,board,username}=req.body;
         const u=await Game.updateOne({_id:tid},{$set:{board}});
         const p=await Game.findOne({_id:tid});
-        res.json({
-                    status:"winner",
-                    details:p,
-                    extra:tid
-                   })
-        // if(p.player1Id===username)
-        // {
-        //     const boo=await Evaluate.winner(board);
-        //     if(boo)
-        //     {
-        //         const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p[0].player2Id,result:"completed"}});
-        //         const result=await Game.find({_id:tid});
+        if(p.player1Id===username)
+        {
+            const boo=await Evaluate.winner(board);
+            if(boo)
+            {
+                const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p[0].player2Id,result:"completed"}});
+                const result=await Game.find({_id:tid});
                 
-        //     res.json({
-        //         status:"winner",
-        //         details:result
-        //        })
+            res.json({
+                status:"winner",
+                details:result
+               })
 
-        //     }
-        //     else
-        //     {
-        //     const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true}});
-        //     const result=await Game.find({_id:tid});
+            }
+            else
+            {
+            const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true}});
+            const result=await Game.find({_id:tid});
             
-        // res.json({
-        //     status:"success",
-        //     details:result
-        //    })
-        // }
-        // }
-        // else
-        // {
-        //     const boo=await Evaluate.winner(board);
-        //     if(boo)
-        //     {
+        res.json({
+            status:"success",
+            details:result
+           })
+        }
+        }
+        else
+        {
+            const boo=await Evaluate.winner(board);
+            if(boo)
+            {
                 
-        //     const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false,winner:username,losser:p[0].player1Id,result:"completed"}});
-        //     const result=await Game.find({_id:tid});
+            const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false,winner:username,losser:p[0].player1Id,result:"completed"}});
+            const result=await Game.find({_id:tid});
         
-        //        res.json({
-        //     status:"winner",
-        //     details:result
-        //    })
+               res.json({
+            status:"winner",
+            details:result
+           })
 
-        //     }
-        //     else
-        //     {
-        //     const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false}});
-        //     const result=await Game.find({_id:tid});
+            }
+            else
+            {
+            const u2=await Game.updateOne({_id:tid},{$set:{board,player1status:true,player2status:false}});
+            const result=await Game.find({_id:tid});
         
-        // res.json({
-        //     status:"success",
-        //     details:result
-        //    })
-        // }
-        // }
+        res.json({
+            status:"success",
+            details:result
+           })
+        }
+        }
         
     }
     catch(err)
