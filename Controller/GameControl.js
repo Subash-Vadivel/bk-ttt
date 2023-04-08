@@ -296,38 +296,35 @@ exports.remove=async(req,res)=>{
                 "player2Id":username
             }]
         });
+        
+        if(resumeGame.length===0)
+        {
+            res.json({
+                status:"error",
+                data:{
+                    message:"Success",
+                    dat:resumeGame
+                }
+            })
+        }
+        else
+        {
+        const newStat=await new Board(resumeGame);
+        const result=await newStat.save();
+        const dele=await Game.deleteOne({
+            "$or": [{
+                "player1Id":username
+            }, {
+                "player2Id":username
+            }]
+        });
         res.json({
             status:"success",
-            details:resumeGame
-           })
-        // if(true)
-        // {
-        //     res.json({
-        //         status:"error",
-        //         data:{
-        //             message:"Success",
-        //             dat:resumeGame
-        //         }
-        //     })
-        // }
-        // else
-        // {
-        // const newStat=await new Board(resumeGame);
-        // const result=await newStat.save();
-        // const dele=await Game.deleteOne({
-        //     "$or": [{
-        //         "player1Id":username
-        //     }, {
-        //         "player2Id":username
-        //     }]
-        // });
-        // res.json({
-        //     status:"error",
-        //     data:{
-        //         message:"Success",
-        //     }
-        // })
-    // }
+            data:{
+                message:"Success",
+            }
+        })
+    }
             }
             catch(err)
             {
