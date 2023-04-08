@@ -156,7 +156,7 @@ exports.update=async(req,res)=>{
             const boo=await Evaluate.winner(board);
             if(boo)
             {
-                const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p[0].player2Id,result:"completed"}});
+                const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p.player2Id,result:"completed"}});
                 const result=await Game.find({_id:tid});
                 
             res.json({
