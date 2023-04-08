@@ -322,7 +322,9 @@ exports.remove=async(req,res)=>{
             status:"success",
             data:{
                 message:"Success",
-            }
+            },
+            len:resumeGame.length
+            
         })
     }
             }
