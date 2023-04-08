@@ -47,6 +47,7 @@ const gameSchema = new mongoose.Schema({
     },
     draw:{
         type:Boolean,
+        require:true,
         default:false
     }
 
