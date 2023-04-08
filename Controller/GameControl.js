@@ -154,7 +154,10 @@ exports.update=async(req,res)=>{
         if(p.player1Id===username)
         {
             const boo=await Evaluate.winner(board);
-            const isBoardFilled = board.every(row => row.every(val => val !== null));
+            
+            const isBoardFilled = flase;
+            if(!board.inclues(null))
+                 isBoardFilled=true;
             if(boo)
             {
                 const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p.player2Id,result:"completed"}});
@@ -189,7 +192,9 @@ exports.update=async(req,res)=>{
         else
         {
             const boo=await Evaluate.winner(board);
-            const isBoardFilled = board.every(row => row.every(val => val !== null));
+            const isBoardFilled = flase;
+            if(!board.inclues(null))
+                 isBoardFilled=true;
             if(boo)
             {
                 
