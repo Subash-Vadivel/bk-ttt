@@ -17,3 +17,12 @@ exports.winner=(board)=>{
     
       return false;
     }
+
+    exports.check=(board)=>{
+      for(var i=0;i<board.length;i++)
+      {
+          if(board[i]!=='X' || board[i]!=='O')
+              return false;
+      }
+      return true;
+    }
