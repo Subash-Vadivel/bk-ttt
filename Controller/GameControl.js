@@ -155,12 +155,12 @@ exports.update=async(req,res)=>{
         {
             const boo=await Evaluate.winner(board);
             
-            const isBoardFilled = true;
-            for(var i=0;i<board.length;i++)
-            {
-                if(board[i]!=='X' || board[i]!=='O')
-                    isBoardFilled=false;
-            }
+            const isBoardFilled = false;
+            // for(var i=0;i<board.length;i++)
+            // {
+            //     if(board[i]!=='X' || board[i]!=='O')
+            //         isBoardFilled=false;
+            // }
            
             if(boo)
             {
@@ -196,12 +196,12 @@ exports.update=async(req,res)=>{
         else
         {
             const boo=await Evaluate.winner(board);
-            const isBoardFilled = true;
-            for(var i=0;i<board.length;i++)
-            {
-                if(board[i]!=='X' || board[i]!=='O')
-                    isBoardFilled=false;
-            }
+            const isBoardFilled = false;
+            // for(var i=0;i<board.length;i++)
+            // {
+            //     if(board[i]!=='X' || board[i]!=='O')
+            //         isBoardFilled=false;
+            // }
            
             if(boo)
             {
