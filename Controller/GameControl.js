@@ -289,7 +289,7 @@ exports.remove=async(req,res)=>{
         const {username}=req.body;
 
 
-        const resumeGame=await Game.find({
+        const resumeGame=await Game.findOne({
             "$or": [{
                 "player1Id":username
             }, {
