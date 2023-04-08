@@ -323,7 +323,7 @@ exports.remove=async(req,res)=>{
             }]
         });
         
-        if(resumeGame==undefined || resumeGame==null || resumeGame.draw)
+        if(resumeGame==undefined || resumeGame==null)
         {
             res.json({
                 status:"error",
