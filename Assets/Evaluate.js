@@ -21,8 +21,8 @@ exports.winner=(board)=>{
     exports.check=(board)=>{
       for(var i=0;i<board.length;i++)
       {
-          if(board[i]!=='X' || board[i]!=='O')
-              return false;
+        if(board[i]==null)
+        return false;
       }
       return true;
     }
