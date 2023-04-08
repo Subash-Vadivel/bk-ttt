@@ -319,6 +319,12 @@ exports.remove = async (req, res) => {
         ]
       });
   
+      const gameDeletionResult = await Game.deleteOne({
+        $or: [
+          { player1Id: username },
+          { player2Id: username }
+        ]
+      });
       if (!resumeGame) {
         // User not found in any game
         return res.json({
@@ -337,12 +343,7 @@ exports.remove = async (req, res) => {
         losser: resumeGame.losser
       }).save();
   
-      const gameDeletionResult = await Game.deleteOne({
-        $or: [
-          { player1Id: username },
-          { player2Id: username }
-        ]
-      });
+    
   
       res.json({
         status: "success",
