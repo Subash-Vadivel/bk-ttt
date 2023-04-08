@@ -297,7 +297,7 @@ exports.remove=async(req,res)=>{
             }]
         });
         
-        if(resumeGame.length===0)
+        if(resumeGame==undefined || resumeGame==null)
         {
             res.json({
                 status:"error",
