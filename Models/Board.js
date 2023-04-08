@@ -4,12 +4,10 @@ const boardSchema = new mongoose.Schema({
     player1Id:{
         type:String,
             require:true,
-            unique:true
     },
     player2Id:{
         type:String,
             require:true,
-            unique:true
     },
     result:{
         type:String,
