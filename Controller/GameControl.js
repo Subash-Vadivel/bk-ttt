@@ -153,7 +153,8 @@ exports.update=async(req,res)=>{
         const p=await Game.findOne({_id:tid});
         res.json({
                     status:"winner",
-                    details:p
+                    details:p,
+                    extra:tid
                    })
         // if(p.player1Id===username)
         // {
