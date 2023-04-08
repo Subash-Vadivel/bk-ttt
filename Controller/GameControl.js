@@ -155,9 +155,13 @@ exports.update=async(req,res)=>{
         {
             const boo=await Evaluate.winner(board);
             
-            const isBoardFilled = false;
-            if(!board.includes(null))
-                 isBoardFilled=true;
+            const isBoardFilled = true;
+            for(var i=0;i<board.length;i++)
+            {
+                if(board[i]!=='X' || board[i]!=='O')
+                    isBoardFilled=false;
+            }
+           
             if(boo)
             {
                 const u1=await Game.updateOne({_id:tid},{$set:{board,player1status:false,player2status:true,winner:username,losser:p.player2Id,result:"completed"}});
@@ -192,9 +196,13 @@ exports.update=async(req,res)=>{
         else
         {
             const boo=await Evaluate.winner(board);
-            const isBoardFilled = false;
-            if(!board.includes(null))
-                 isBoardFilled=true;
+            const isBoardFilled = true;
+            for(var i=0;i<board.length;i++)
+            {
+                if(board[i]!=='X' || board[i]!=='O')
+                    isBoardFilled=false;
+            }
+           
             if(boo)
             {
                 
